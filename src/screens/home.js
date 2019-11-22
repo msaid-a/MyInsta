@@ -53,7 +53,7 @@ export default class home extends Component {
                                 <Text style={{marginLeft:5,marginTop:3 ,fontWeight:"bold", fontSize:15}}>{data.likes} likes</Text>   
 
                             </View>
-                            <View style={{marginLeft:"auto"}}>
+                            <View style={{marginLeft:4}}>
                                 <Icon
                                 name='bookmark-o'
                                 size={25}

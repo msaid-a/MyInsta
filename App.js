@@ -5,12 +5,18 @@ import Register from './src/screens/register'
 import Home from './src/screens/home'
 import MainStack from './src/routes/route'
 import 'react-native-gesture-handler'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+import reducers from './src/redux/reducers/index'
 
+let store = createStore(reducers)
 export default class App extends Component {
+
   render() {
     return (
-    
+      <Provider store={store}>
         <MainStack />
+      </Provider>
     )
   }
 }
