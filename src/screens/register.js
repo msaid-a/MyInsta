@@ -69,7 +69,7 @@ import {StackActions, NavigationActions} from 'react-navigation'
         AsyncStorage.getItem('data')
             .then((data)=>{
                 if(data){
-                    var obj_data = JSON.parse(data)
+                    const obj_data = JSON.parse(data)
                     this.props.onRegisterSucess(obj_data)
                     this.setState({check_storage:true})
                     console.log(obj_data)

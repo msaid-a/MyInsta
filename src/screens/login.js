@@ -1,14 +1,56 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Alert, AsyncStorage } from 'react-native'
 import {Text, Input, Button} from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { element } from 'prop-types';
+import urlApi from '../support/urlApi'
+import Axios from 'axios';
+import {connect} from 'react-redux' 
+import {onRegisterSucess} from '../redux/action/users'
+import { StackActions,NavigationActions } from 'react-navigation';
 
-export default class login extends Component {
+class login extends Component {
     
     state ={
-        look : true
+        look : true,
+        username : '',
+        password : '',
+        loading_btn : false
     }
     
+
+    onBtnLogin = () =>{
+        this.setState({loading_btn: true})
+        const {username, password} = this.state
+        if(username && password){
+        Axios.post("https://apiinstagrinjc.herokuapp.com/auth/login",{
+            username, password
+        }).then(res=>{
+            console.log(res.data)
+            if(res.data.error){
+                return Alert.alert(res.data.error)
+            }
+            let {email,username} = res.data.data[0]
+            AsyncStorage.setItem('data', JSON.stringify({email,username}), (err) =>{
+                if(err) return alert(err.message)
+                this.props.onRegisterSucess({email,username})
+                Alert.alert(res.data.message)
+            })        
+        })
+        }else{
+            Alert.alert("Isi Semua Form")
+        }
+    }
+    componentDidUpdate(){
+        if(this.props.user){
+            const reset_stack = StackActions.reset({
+                index : 0,
+                actions : [NavigationActions.navigate({routeName:'home'})]
+            })
+            this.props.navigation.dispatch(reset_stack)
+        }
+    }
+
     render() {
         return (
             <View style={{flex:1, justifyContent :"center", paddingHorizontal:20}}>
@@ -16,6 +58,7 @@ export default class login extends Component {
                 <View style={{marginTop:30}}>
                 <Input
                     placeholder='Email / Username'
+                    onChangeText ={text => this.setState({username : text})}
                     leftIcon={
                         <Icon
                         name='envelope'
@@ -32,6 +75,7 @@ export default class login extends Component {
                 <View style={{marginTop:15}}>
                 <Input
                     secureTextEntry={this.state.look}
+                    onChangeText ={text => this.setState({password : text})}
                     placeholder='Password'
                     type='password'
                     leftIcon={
@@ -61,6 +105,8 @@ export default class login extends Component {
                     <View style={{ marginTop:20}}>
                     <Button
                         title="Login"
+                        onPress={this.onBtnLogin}
+                        loading_btn ={this.state.loading_btn}
                         />
 
                     </View>
@@ -101,3 +147,11 @@ export default class login extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return{
+        user : state.Users.username,
+
+    }
+}
+export default connect(mapStateToProps,{onRegisterSucess})(login) 
