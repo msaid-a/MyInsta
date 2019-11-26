@@ -23,9 +23,16 @@ export default class home extends Component {
     renderPost = () =>{
         return this.state.data.map(val => {
             return(
-                <Post avatarUrl={api + `/public/profile/default.png`} username={val.username} caption={val.caption} postUrl={api+ `/${val.foto_url}`}/>
+                <Post avatarUrl={api + `/public/profile/default.png`} username={val.username} caption={val.caption} postUrl={api+ `/${val.foto_url}`} onPindah={()=>this.filter(val.username)}/>
             )
         })
+    }
+
+    filter = (username) =>{
+        let dataFilter = this.state.data.filter(data =>{
+            return data.username === username
+        })
+        return this.props.navigation.navigate('detail',{data:dataFilter})
     }
 
     render() {

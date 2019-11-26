@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default class post extends Component {
     render() {
         return (
-            <View style={{marginVertical:25}}>
-            <View style={{flexDirection:"row", marginTop:20, paddingHorizontal:10, paddingVertical:8, justifyContent : "space-between", marginVertical:20}}>
+            <View style={{marginVertical:10}}>
+            <View style={{flexDirection:"row", marginTop:10, paddingHorizontal:10, paddingVertical:8, justifyContent : "space-between", marginVertical:20}}>
                 <View style={{flexDirection:"row"}}>
                     <Avatar
                         rounded
@@ -15,7 +15,7 @@ export default class post extends Component {
                             uri:this.props.avatarUrl,
                         }}
                         />
-                    <Text style={{fontWeight:"bold", fontSize:20, marginLeft:10}}>{this.props.username}</Text>
+                    <Text style={{fontWeight:"bold", fontSize:20, marginLeft:10}} onPress={this.props.onPindah}>{this.props.username}</Text>
                 </View>
                 <View style={{alignSelf:"center"}}>
                     <Icon 
