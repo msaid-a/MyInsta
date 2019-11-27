@@ -42,7 +42,7 @@ class detailProfile extends Component {
                             <Icon name='arrow-back' onPress={()=> this.props.navigation.goBack()} />
                     </Left>
                     <Body>
-                        <Text>Username</Text>
+                        <Text>{this.state.data[0].username}</Text>
                     </Body>
                     <Right>
                     </Right>
@@ -56,7 +56,7 @@ class detailProfile extends Component {
                             size={100}
                             rounded
                             source={{
-                                uri:'http://apiinstagrinjc.herokuapp.com/public/posts/POS1574734597340.jpeg',
+                                uri:api + `/public/profile/default.png`,
                             }}
                             />
                     </View>
@@ -76,7 +76,7 @@ class detailProfile extends Component {
 
                 {/* user info */}
                 <View style={{marginTop:15,paddingHorizontal:15}}>
-                    <Text style={{fontWeight:'bold'}}> Username </Text>
+                    <Text style={{fontWeight:'bold'}}> {this.state.data[0].username} </Text>
                     <Text> User Bio </Text>
                 </View>
 

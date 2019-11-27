@@ -71,9 +71,9 @@ class register extends Component {
 
                 }else{
                     this.setState({loadingButtonRegister:false})
-                    AsyncStorage.setItem('data', JSON.stringify({email,username}), (err) =>{
+                    AsyncStorage.setItem('data', JSON.stringify({email,username,id}), (err) =>{
                         if(err) return alert(err.message)
-                        this.props.onRegisterSucess({email,username})
+                        this.props.onRegisterSucess({email,username,id})
                         Alert.alert(res.data.message)
                     })
                 }
@@ -98,6 +98,7 @@ class register extends Component {
             .then((data)=>{
                 if(data){
                     const obj_data = JSON.parse(data)
+                    console.log(obj_data)
                     this.props.onRegisterSucess(obj_data)
                     this.setState({check_storage:true})
                     console.log(obj_data)
